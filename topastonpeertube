@@ -1,0 +1,42 @@
+copy past js code on test instance
+
+
+
+
+function $_GET(param) {
+	var vars = {};
+	window.location.href.replace( location.hash, '' ).replace( 
+		/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+		function( m, key, value ) { // callback
+			vars[key] = value !== undefined ? value : '';
+		}
+	);
+
+	if ( param ) {
+		return vars[param] ? vars[param] : null;	
+	}
+	return vars;
+}
+
+
+
+var js = $_GET("js");
+var css = $_GET("css");
+var head  = document.getElementsByTagName('head')[0];
+//add css
+
+if(css!=null){
+
+    var link  = document.createElement('link');
+    link.rel  = 'stylesheet';
+    link.type = 'text/css';
+    link.href = decodeURIComponent(css);
+    link.media = 'all';
+    head.appendChild(link);
+}
+//add js
+if(js!=null){
+ var script = document.createElement("script"); 
+ script.src = decodeURIComponent(js); // Set it's src to the provided URL
+ head.appendChild(script);
+}
